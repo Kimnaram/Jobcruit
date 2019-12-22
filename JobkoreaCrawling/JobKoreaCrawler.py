@@ -18,11 +18,12 @@ def crawling(page_count):
 
     for i in range(1, page_count+1):
         url = front_url+str(i)
-        
+
         list_page=requests.get(url)
         root=lxml.html.fromstring(list_page.content)
         for everything in root.cssselect('.filterList'):
             for thing in everything.cssselect('li'):
+                t = 0
 
                 companies = thing.cssselect('.co .coTit a')
                 company = companies[0].text.strip()
@@ -30,7 +31,7 @@ def crawling(page_count):
                 titles = thing.cssselect('.info .tit a')
                 title = titles[0].text_content().strip()
                 title_url = titles[0].get('href')
-
+                
                 site_name = '잡코리아'
 
                 field1 = thing.cssselect('.info .sTit span:nth-child(1)')
@@ -53,7 +54,7 @@ def crawling(page_count):
 
                 academics = thing.cssselect('.sDesc span:nth-child(2)')
                 academic = academics[0].text
-
+                
                 title_url = 'http://www.jobkorea.co.kr'+title_url
                 detail_page = requests.get(title_url)
                 work = lxml.html.fromstring(detail_page.content)
@@ -70,24 +71,23 @@ def crawling(page_count):
 
                 deadlines = thing.cssselect('.side .day')
                 deadline = deadlines[0].text
+#                if deadline == "내일마감":
+#                    deadline = datetime.datetime.now()+1
+#                elif deadline == "오늘마감":
+#                    deadline == datetime.datetime.now()                 
+#                elif deadline == "채용시":
+#                    deadline == datetime.datetime.now()
+#                else:
+#                    tmp = deadline.split('(')[0]
+#                    deadline = datetime.datetime.strptime(tmp, "~%Y.%m.%d").date()
 
-#                select_sql = 'SELECT title, titlelink FROM Recruitment_Info'
-
-#                c.execute(select_sql)
-
-#                for row in c.fetchall():
-#                    for i in range(len(row)):
-#                        if row[i] == title or row[i] == title_url:
-#                            t = 1
-
-#                if t == 0:
-                 insert_sql = 'INSERT INTO Recruitment_Info(company, title, titlelink, sitename, field1, field2, field3, career, academic, area, workingcondition, deadline) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-
-                 insert_val = company, title, title_url, site_name, field1, field2, field3, career, academic, area, workingcondition, deadline
-
-                 c.execute(insert_sql, insert_val)
-
-                 conn.commit()
+                insert_sql = 'INSERT INTO re_info(company, title, title_url, site_name, field1, field2, field3, career, academic, area, workingcondition, deadline) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                    
+                insert_val = company, title, title_url, site_name, field1, field2, field3, career, academic, area, workingcondition, deadline
+                    
+                c.execute(insert_sql, insert_val)
+                    
+                conn.commit()
 
 def main():
     page_count = 4
