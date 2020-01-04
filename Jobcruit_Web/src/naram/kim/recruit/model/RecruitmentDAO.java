@@ -25,7 +25,7 @@ public class RecruitmentDAO {
 		return dao;
 	}
 	
-	String url = "jdbc:mysql://ec2-54-235-0-24.compute-1.amazonaws.com/Crawler";
+	String url = "jdbc:mysql://ec2-3-88-9-95.compute-1.amazonaws.com/Crawler";
 	String user = "cloud";
 	String upw = "1111";
 	

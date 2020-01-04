@@ -1,5 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="naram.kim.recruit.model.*" %>
+<%@page import="java.util.ArrayList" %>
+
+<%
+   RecruitmentDAO dao = RecruitmentDAO.getInstance();
+   ArrayList<RecruitmentVO> list = dao.listRecruitment();
+   
+   pageContext.setAttribute("list", list);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -205,8 +215,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#recruit">RECRUIT</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
         <li><a href="#contact">CONTACT</a></li>
       </ul>
@@ -221,144 +230,70 @@
     <div class="input-group">
       <input type="text" class="form-control" placeholder="회사명 혹은 타이틀명으로 검색 가능합니다." required>
       <div class="input-group-btn">
-        <button type="button" class="btn btn-danger">검색</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='Search_Jobcruit.jsp'">검색</button>
       </div>
     </div>
   </form>
 </div>
 
 <!-- Container (About Section) -->
-<div id="about" class="container-fluid">
+<div id="recruit" class="container-fluid">
   <div class="row">
-    <div class="col-sm-8">
-      <h2>About Company Page</h2><br>
-      <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <br><button class="btn btn-default btn-lg">Get in Touch</button>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-signal logo"></span>
-    </div>
-  </div>
-</div>
-
+<h2 class="text-center">Recruit</h2>
 <div class="container-fluid bg-grey">
   <div class="row">
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-globe logo slideanim"></span>
-    </div>
-    <div class="col-sm-8">
-      <h2>Our Values</h2><br>
-      <h4><strong>MISSION:</strong> Our mission lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
-      <p><strong>VISION:</strong> Our vision Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
+  
+  <c:forEach var="li" items="${list }">
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>회사명</th>
+        <th>제목</th>
+        <th>사이트명</th>
+        <th>분야1</th>
+        <th>분야2</th>
+        <th>분야3</th>
+        <th>경력</th>
+        <th>학력</th>
+        <th>정규직/계약직</th>
+        <th>지역</th>
+        <th>마감일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>${li.company }</td>
+        <td>${li.title }</td>
+        <td>${li.site_name }</td>
+        <td>${li.field1 }</td>
+        <td>${li.field2 }</td>
+        <td>${li.field3 }</td>
+        <td>${li.career }</td>
+        <td>${li.academic }</td>
+        <td>${li.workingcondition }</td>
+        <td>${li.area }</td>
+        <td>${li.deadline }</td>
+      </tr>
+    </tbody>
+  </table>
+  </c:forEach>
   </div>
 </div>
-
-<!-- Container (Services Section) -->
-<div id="services" class="container-fluid text-center">
-  <h2>SERVICES</h2>
-  <h4>What we offer</h4>
-  <br>
-  <div class="row slideanim">
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-off logo-small"></span>
-      <h4>POWER</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-heart logo-small"></span>
-      <h4>LOVE</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-lock logo-small"></span>
-      <h4>JOB DONE</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-  </div>
-  <br><br>
-  <div class="row slideanim">
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-leaf logo-small"></span>
-      <h4>GREEN</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-certificate logo-small"></span>
-      <h4>CERTIFIED</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-wrench logo-small"></span>
-      <h4 style="color:#303030;">HARD WORK</h4>
-      <p>Lorem ipsum dolor sit amet..</p>
-    </div>
-  </div>
+</div>
 </div>
 
 <!-- Container (Portfolio Section) -->
 <div id="portfolio" class="container-fluid text-center bg-grey">
   <h2>Portfolio</h2><br>
-  <h4>What we have created</h4>
   <div class="row text-center slideanim">
-    <div class="col-sm-4">
-      <div class="thumbnail">
-        <img src="paris.jpg" alt="Paris" width="400" height="300">
-        <p><strong>Paris</strong></p>
-        <p>Yes, we built Paris</p>
-      </div>
-    </div>
     <div class="col-sm-4">
       <div class="thumbnail">
         <img src="../images/Seo.jpg" alt="서리태" width="400" height="300">
         <p><strong>서리태</strong></p>
-        <p>JSP, HTML, Scraping</p>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="thumbnail">
-        <img src="sanfran.jpg" alt="San Francisco" width="400" height="300">
-        <p><strong>San Francisco</strong></p>
-        <p>Yes, San Fran is ours</p>
+        <p>JSP, HTML, Scraping 담당</p>
       </div>
     </div>
   </div><br>
-  
-  <h2>What our customers say</h2>
-  <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <h4>"This company is the best. I am so happy with the result!"<br><span>Michael Roe, Vice President, Comment Box</span></h4>
-      </div>
-      <div class="item">
-        <h4>"One word... WOW!!"<br><span>John Doe, Salesman, Rep Inc</span></h4>
-      </div>
-      <div class="item">
-        <h4>"Could I... BE any more happy with this company?"<br><span>Chandler Bing, Actor, FriendsAlot</span></h4>
-      </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>
 
 <!-- Container (Contact Section) -->
 <div id="contact" class="container-fluid bg-grey">
@@ -366,9 +301,9 @@
   <div class="row">
     <div class="col-sm-5">
       <p>Contact us and we'll get back to you within 24 hours.</p>
-      <p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
-      <p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
-      <p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> Yongin, South Korea</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +00 12341234</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> abc1234@something.com</p>
     </div>
     <div class="col-sm-7 slideanim">
       <div class="row">
