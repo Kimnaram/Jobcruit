@@ -171,7 +171,7 @@ public class RecruitmentDAO {
 			
 			while(rs.next()) {
 				
-				total = rs.getInt(1);
+				total = total + 1;
 				
 			}
 		} catch (Exception e) {

@@ -25,23 +25,16 @@
 	int to = (pg * rowSize);
 	
 	ArrayList<RecruitmentVO> list = dao.listRecruitment(from, to);
-		   
-	pageContext.setAttribute("list", list);
 	
 	int total = dao.RecruitmentTotal();
 	int allPage = (int)Math.ceil(total / (double)rowSize);
 	int block = 10;
-	
-	System.out.println("전체 페이지 수 : "+allPage);
-	System.out.println("현재 페이지 : "+page_num);
 	
 	int startPage = ((pg - 1) / block * block) + 1;
 	int endPage = ((pg - 1) / block * block + block);
 	if (endPage > allPage) {
 		endPage = allPage;
 	}
-	
-	System.out.println("페이지 시작 : "+startPage+" / 페이지 끝 : "+endPage);
 	
 %>
 <!DOCTYPE html>
@@ -127,6 +120,9 @@
     border-color: transparent;
     color: #fff !important;
   }
+  .contact-p {
+  	font-size: 18px;
+  }
   footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
@@ -173,7 +169,6 @@
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -182,7 +177,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#myPage">LOGO</a>
+      <a class="navbar-brand" href="#myPage">Jobcruit</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
@@ -198,7 +193,7 @@
   <h1>Jobcruit</h1> 
   <p>잡코리아, 인크루트에 올라온 최신 공고들을 스크레이핑해서 하나의 페이지에서 보여드립니다.</p> 
   <form name="frm" id="frm" method="get" action="Search_Jobcruit.jsp">
-      <input type="text" name="search_keyword" size="100" id="search_keyword" placeholder="회사명 혹은 타이틀명으로 검색 가능합니다." required />
+      <input type="text" name="search_keyword" size="100" id="search_keyword" placeholder="회사명 혹은 타이틀명으로 검색 가능합니다." style="color:black;" required />
       <button class="btn btn-default">검색</button>
   </form>
 </div>
@@ -213,25 +208,26 @@
   for (int i = 0; i < list.size(); i++) {
 	  RecruitmentVO r = list.get(i);
   %>
+  <div style="background-color:white; padding:0px;">
     <table class="table table-hover">
     <thead>
       <tr>
-        <th width=200px>회사명</th>
-        <th width=500px>제목</th>
-        <th>사이트명</th>
-        <th width=300px>분야1</th>
-        <th>분야2</th>
-        <th>분야3</th>
+        <th width=250px>회사명</th>
+        <th width=470px>제목</th>
+        <th width=250px>사이트명</th>
+        <th width=380px>분야1</th>
+        <th width=150px>분야2</th>
+        <th width=150px>분야3</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td width=100px><%=r.getCompany()%><!--  ${li.company } --></td>
-        <td width=500px><a class="title" href="<%=r.getTitlelink()%>" target="_blank"><%=r.getTitle()%></a></td>
-        <td><%=r.getSite_name()%></td>
-        <td width=300px><%=r.getField1()%></td>
-        <td><% if(r.getField2() != null) { r.getField2(); }%></td>
-        <td><% if(r.getField3() != null) { r.getField3(); }%></td>
+        <td width=250px><%=r.getCompany()%><!--  ${li.company } --></td>
+        <td width=470px><a class="title" href="<%=r.getTitlelink()%>" target="_blank"><%=r.getTitle()%></a></td>
+        <td width=250px><%=r.getSite_name()%></td>
+        <td width=380px><%=r.getField1()%></td>
+        <td width=200px><% if(r.getField2() != null) { r.getField2(); }%></td>
+        <td width=200px><% if(r.getField3() != null) { r.getField3(); }%></td>
       </tr>
     </tbody>
     <thead>
@@ -241,6 +237,7 @@
         <th>정규직/계약직</th>
         <th>지역</th>
         <th>마감일</th>
+        <th>? / ★★★★★</th>
     </thead>
     <tbody>
     <tr>
@@ -249,9 +246,11 @@
         <td><%=r.getWorkingcondition()%></td>
         <td><%=r.getArea()%></td>
         <td><%=r.getDeadline()%></td>
+        <td></td>
     </tr>
     </tbody>
   </table>
+    </div>
   <%
   }
   %>
@@ -307,7 +306,8 @@
       <div class="thumbnail">
         <img src="../images/Seo.jpg" alt="서리태" style="width:350px; height:350px;">
         <p><strong>서리태</strong></p>
-        <p>JSP, HTML, Scraping 담당</p>
+        <p>JSP, HTML, CSS 수정</p>
+        <p>Jobkorea, Incruit Scraping</p>
       </div>
     </div>
   </div><br>
@@ -316,27 +316,10 @@
 <div id="contact" class="container-fluid bg-grey">
   <h2 class="text-center">CONTACT</h2>
   <div class="row">
-    <div class="col-sm-5">
-      <p>Contact us and we'll get back to you within 24 hours.</p>
-      <p><span class="glyphicon glyphicon-map-marker"></span> Yongin, South Korea</p>
-      <p><span class="glyphicon glyphicon-phone"></span> +00 12341234</p>
-      <p><span class="glyphicon glyphicon-envelope"></span> abc1234@something.com</p>
-    </div>
-    <div class="col-sm-7 slideanim">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-        </div>
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-        </div>
-      </div>
-      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-      <div class="row">
-        <div class="col-sm-12 form-group">
-          <button class="btn btn-default pull-right" type="submit">Send</button>
-        </div>
-      </div>
+    <div>
+      <p class="contact-p">Contact us and we'll get back to you within 24 hours.</p>
+      <p class="contact-p"><span class="glyphicon glyphicon-map-marker"></span> Yongin, South Korea</p>
+      <p class="contact-p"><span class="glyphicon glyphicon-envelope"></span> tlsdmswjs3@chungbuk.ac.kr</p>
     </div>
   </div>
 </div>
@@ -386,5 +369,4 @@ $(document).ready(function(){
 </script>
 
 </body>
-</html>
-    
+</html> 
